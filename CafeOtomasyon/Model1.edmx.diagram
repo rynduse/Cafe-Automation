@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="23f12a279c49413fa550a75a83bbada9" Name="Diagram1">
+        <EntityTypeShape EntityType="CafeOtomasyonModel.Adisyon" Width="1.5" PointX="3" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CafeOtomasyonModel.Kategoriler" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="CafeOtomasyonModel.Satis" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CafeOtomasyonModel.SiparisUrun" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CafeOtomasyonModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CafeOtomasyonModel.Urunler" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CafeOtomasyonModel.Yonetim" Width="1.5" PointX="7.75" PointY="2.125" IsExpanded="true" />
+        <AssociationConnector Association="CafeOtomasyonModel.FK__SiparisUr__adisy__44FF419A" ManuallyRouted="false" />
+        <AssociationConnector Association="CafeOtomasyonModel.FK__Urunler__kategor__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="CafeOtomasyonModel.FK__Satis__urunID__3F466844" ManuallyRouted="false" />
+        <AssociationConnector Association="CafeOtomasyonModel.FK__SiparisUr__urunI__45F365D3" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

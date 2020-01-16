@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CafeOtomasyonModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Adisyon">
+    <Key>
+      <PropertyRef Name="adisyonID" />
+    </Key>
+    <Property Name="adisyonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="masaNo" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Kategoriler">
+    <Key>
+      <PropertyRef Name="kategoriID" />
+    </Key>
+    <Property Name="kategoriID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="kategoriIsmi" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Satis">
+    <Key>
+      <PropertyRef Name="satisID" />
+    </Key>
+    <Property Name="satisID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="urunID" Type="int" />
+    <Property Name="ciro" Type="money" />
+    <Property Name="gunluk" Type="datetime" />
+  </EntityType>
+  <EntityType Name="SiparisUrun">
+    <Key>
+      <PropertyRef Name="siparisUrunID" />
+    </Key>
+    <Property Name="siparisUrunID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="adisyonNo" Type="int" />
+    <Property Name="urunID" Type="int" />
+    <Property Name="adet" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Urunler">
+    <Key>
+      <PropertyRef Name="urunID" />
+    </Key>
+    <Property Name="urunID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="kategoriID" Type="int" />
+    <Property Name="birimFiyat" Type="money" />
+    <Property Name="urunAdi" Type="varchar" MaxLength="50" />
+    <Property Name="satilanAdet" Type="int" />
+    <Property Name="kalanAdet" Type="int" />
+  </EntityType>
+  <EntityType Name="Yonetim">
+    <Key>
+      <PropertyRef Name="yonetimID" />
+    </Key>
+    <Property Name="yonetimID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="kullaniciAdi" Type="varchar" MaxLength="20" />
+    <Property Name="sifre" Type="int" />
+  </EntityType>
+  <Association Name="FK__Satis__urunID__3F466844">
+    <End Role="Urunler" Type="Self.Urunler" Multiplicity="0..1" />
+    <End Role="Satis" Type="Self.Satis" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Urunler">
+        <PropertyRef Name="urunID" />
+      </Principal>
+      <Dependent Role="Satis">
+        <PropertyRef Name="urunID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SiparisUr__adisy__44FF419A">
+    <End Role="Adisyon" Type="Self.Adisyon" Multiplicity="0..1" />
+    <End Role="SiparisUrun" Type="Self.SiparisUrun" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Adisyon">
+        <PropertyRef Name="adisyonID" />
+      </Principal>
+      <Dependent Role="SiparisUrun">
+        <PropertyRef Name="adisyonNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SiparisUr__urunI__45F365D3">
+    <End Role="Urunler" Type="Self.Urunler" Multiplicity="0..1" />
+    <End Role="SiparisUrun" Type="Self.SiparisUrun" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Urunler">
+        <PropertyRef Name="urunID" />
+      </Principal>
+      <Dependent Role="SiparisUrun">
+        <PropertyRef Name="urunID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Urunler__kategor__3B75D760">
+    <End Role="Kategoriler" Type="Self.Kategoriler" Multiplicity="0..1" />
+    <End Role="Urunler" Type="Self.Urunler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kategoriler">
+        <PropertyRef Name="kategoriID" />
+      </Principal>
+      <Dependent Role="Urunler">
+        <PropertyRef Name="kategoriID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_hesap" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IDdengelenDeger" Type="int" Mode="In" />
+    <Parameter Name="adet" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="CafeOtomasyonModelStoreContainer">
+    <EntitySet Name="Adisyon" EntityType="Self.Adisyon" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Kategoriler" EntityType="Self.Kategoriler" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Satis" EntityType="Self.Satis" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SiparisUrun" EntityType="Self.SiparisUrun" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Urunler" EntityType="Self.Urunler" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Yonetim" EntityType="Self.Yonetim" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Satis__urunID__3F466844" Association="Self.FK__Satis__urunID__3F466844">
+      <End Role="Urunler" EntitySet="Urunler" />
+      <End Role="Satis" EntitySet="Satis" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SiparisUr__adisy__44FF419A" Association="Self.FK__SiparisUr__adisy__44FF419A">
+      <End Role="Adisyon" EntitySet="Adisyon" />
+      <End Role="SiparisUrun" EntitySet="SiparisUrun" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SiparisUr__urunI__45F365D3" Association="Self.FK__SiparisUr__urunI__45F365D3">
+      <End Role="Urunler" EntitySet="Urunler" />
+      <End Role="SiparisUrun" EntitySet="SiparisUrun" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Urunler__kategor__3B75D760" Association="Self.FK__Urunler__kategor__3B75D760">
+      <End Role="Kategoriler" EntitySet="Kategoriler" />
+      <End Role="Urunler" EntitySet="Urunler" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

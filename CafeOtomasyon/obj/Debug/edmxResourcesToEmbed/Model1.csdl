@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CafeOtomasyonModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Adisyon">
+    <Key>
+      <PropertyRef Name="adisyonID" />
+    </Key>
+    <Property Name="adisyonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="masaNo" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="SiparisUrun" Relationship="Self.FK__SiparisUr__adisy__44FF419A" FromRole="Adisyon" ToRole="SiparisUrun" />
+  </EntityType>
+  <EntityType Name="Kategoriler">
+    <Key>
+      <PropertyRef Name="kategoriID" />
+    </Key>
+    <Property Name="kategoriID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="kategoriIsmi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Urunler" Relationship="Self.FK__Urunler__kategor__3B75D760" FromRole="Kategoriler" ToRole="Urunler" />
+  </EntityType>
+  <EntityType Name="Satis">
+    <Key>
+      <PropertyRef Name="satisID" />
+    </Key>
+    <Property Name="satisID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="urunID" Type="Int32" />
+    <Property Name="ciro" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="gunluk" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Urunler" Relationship="Self.FK__Satis__urunID__3F466844" FromRole="Satis" ToRole="Urunler" />
+  </EntityType>
+  <EntityType Name="SiparisUrun">
+    <Key>
+      <PropertyRef Name="siparisUrunID" />
+    </Key>
+    <Property Name="siparisUrunID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="adisyonNo" Type="Int32" />
+    <Property Name="urunID" Type="Int32" />
+    <Property Name="adet" Type="Int32" />
+    <NavigationProperty Name="Adisyon" Relationship="Self.FK__SiparisUr__adisy__44FF419A" FromRole="SiparisUrun" ToRole="Adisyon" />
+    <NavigationProperty Name="Urunler" Relationship="Self.FK__SiparisUr__urunI__45F365D3" FromRole="SiparisUrun" ToRole="Urunler" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Urunler">
+    <Key>
+      <PropertyRef Name="urunID" />
+    </Key>
+    <Property Name="urunID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="kategoriID" Type="Int32" />
+    <Property Name="birimFiyat" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="urunAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="satilanAdet" Type="Int32" />
+    <Property Name="kalanAdet" Type="Int32" />
+    <NavigationProperty Name="Kategoriler" Relationship="Self.FK__Urunler__kategor__3B75D760" FromRole="Urunler" ToRole="Kategoriler" />
+    <NavigationProperty Name="Satis" Relationship="Self.FK__Satis__urunID__3F466844" FromRole="Urunler" ToRole="Satis" />
+    <NavigationProperty Name="SiparisUrun" Relationship="Self.FK__SiparisUr__urunI__45F365D3" FromRole="Urunler" ToRole="SiparisUrun" />
+  </EntityType>
+  <EntityType Name="Yonetim">
+    <Key>
+      <PropertyRef Name="yonetimID" />
+    </Key>
+    <Property Name="yonetimID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="kullaniciAdi" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="sifre" Type="Int32" />
+  </EntityType>
+  <Association Name="FK__SiparisUr__adisy__44FF419A">
+    <End Role="Adisyon" Type="Self.Adisyon" Multiplicity="0..1" />
+    <End Role="SiparisUrun" Type="Self.SiparisUrun" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Adisyon">
+        <PropertyRef Name="adisyonID" />
+      </Principal>
+      <Dependent Role="SiparisUrun">
+        <PropertyRef Name="adisyonNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Urunler__kategor__3B75D760">
+    <End Role="Kategoriler" Type="Self.Kategoriler" Multiplicity="0..1" />
+    <End Role="Urunler" Type="Self.Urunler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kategoriler">
+        <PropertyRef Name="kategoriID" />
+      </Principal>
+      <Dependent Role="Urunler">
+        <PropertyRef Name="kategoriID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Satis__urunID__3F466844">
+    <End Role="Urunler" Type="Self.Urunler" Multiplicity="0..1" />
+    <End Role="Satis" Type="Self.Satis" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Urunler">
+        <PropertyRef Name="urunID" />
+      </Principal>
+      <Dependent Role="Satis">
+        <PropertyRef Name="urunID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SiparisUr__urunI__45F365D3">
+    <End Role="Urunler" Type="Self.Urunler" Multiplicity="0..1" />
+    <End Role="SiparisUrun" Type="Self.SiparisUrun" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Urunler">
+        <PropertyRef Name="urunID" />
+      </Principal>
+      <Dependent Role="SiparisUrun">
+        <PropertyRef Name="urunID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CafeOtomasyonEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Adisyon" EntityType="Self.Adisyon" />
+    <EntitySet Name="Kategoriler" EntityType="Self.Kategoriler" />
+    <EntitySet Name="Satis" EntityType="Self.Satis" />
+    <EntitySet Name="SiparisUrun" EntityType="Self.SiparisUrun" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Urunler" EntityType="Self.Urunler" />
+    <EntitySet Name="Yonetim" EntityType="Self.Yonetim" />
+    <AssociationSet Name="FK__SiparisUr__adisy__44FF419A" Association="Self.FK__SiparisUr__adisy__44FF419A">
+      <End Role="Adisyon" EntitySet="Adisyon" />
+      <End Role="SiparisUrun" EntitySet="SiparisUrun" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Urunler__kategor__3B75D760" Association="Self.FK__Urunler__kategor__3B75D760">
+      <End Role="Kategoriler" EntitySet="Kategoriler" />
+      <End Role="Urunler" EntitySet="Urunler" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Satis__urunID__3F466844" Association="Self.FK__Satis__urunID__3F466844">
+      <End Role="Urunler" EntitySet="Urunler" />
+      <End Role="Satis" EntitySet="Satis" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SiparisUr__urunI__45F365D3" Association="Self.FK__SiparisUr__urunI__45F365D3">
+      <End Role="Urunler" EntitySet="Urunler" />
+      <End Role="SiparisUrun" EntitySet="SiparisUrun" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(CafeOtomasyonModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(CafeOtomasyonModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_hesap" ReturnType="Collection(Decimal)">
+      <Parameter Name="IDdengelenDeger" Mode="In" Type="Int32" />
+      <Parameter Name="adet" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>
